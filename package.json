@@ -1,0 +1,43 @@
+{
+  "name": "one",
+  "version": "1.0.0",
+  "description": "Microfrontend Framework based on [single-spa](https://single-spa.js.org/)",
+  "main": ".prettierrc.js",
+  "scripts": {
+    "examples:install": "npm-run-all -s build install:*",
+    "examples:start": "npm-run-all -p start:*",
+    "install:main": "cd examples/main && npm install",
+    "start:main": "cd examples/main && npm start",
+    "install:react": "cd examples/react16 && npm install",
+    "start:react": "cd examples/react16 && npm start",
+    "install:vue": "cd examples/vue2 && npm install",
+    "start:vue": "cd examples/vue2 && npm start",
+    "build": "rollup -c rollup.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xbrave/one.git"
+  },
+  "keywords": [
+    "Microfrontend",
+    "micro",
+    "single-spa",
+    "single"
+  ],
+  "author": "xbrave",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xbrave/one/issues"
+  },
+  "homepage": "https://github.com/xbrave/one#readme",
+  "dependencies": {
+    "single-spa": "^5.5.5"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^5.0.2",
+    "npm-run-all": "^4.1.5",
+    "rollup": "^2.26.8",
+    "tslib": "^2.0.1",
+    "typescript": "^4.0.2"
+  }
+}
