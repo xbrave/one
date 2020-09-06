@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo</title>
+  </head>
+  <body>
+    <div class="container">
+      <ul class="menu">
+        <li onclick="push('/react')">React</li>
+        <li onclick="push('/vue')">Vue</li>
+      </ul>
+    </div>
+    <main id="app-container"></main>
+    <script>
+      function push(route) {
+        window.history.pushState(null, route, route);
+      }
+    </script>
+  </body>
+</html>

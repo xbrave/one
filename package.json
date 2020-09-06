@@ -12,7 +12,8 @@
     "start:react": "cd examples/react16 && npm start",
     "install:vue": "cd examples/vue2 && npm install",
     "start:vue": "cd examples/vue2 && npm start",
-    "build": "rollup -c rollup.config.js"
+    "build": "rollup -c rollup.config.js",
+    "watch": "rollup -c -w rollup.config.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
   },
   "homepage": "https://github.com/xbrave/one#readme",
   "dependencies": {
+    "import-html-entry": "^1.9.1",
     "single-spa": "^5.5.5"
   },
   "devDependencies": {
