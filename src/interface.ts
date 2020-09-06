@@ -7,11 +7,13 @@ export type AppMetaData = {
   entry: Entry;
 };
 
-export type RegisterableApplication<T extends object = {}> = AppMetaData & {
-  container: string | HTMLElement;
+export type LoadableApp<T extends object = {}> = AppMetaData & { props?: T } & {
+  container: string | HTMLElement
+}
+
+export type RegisterableApplication<T extends object = {}> = AppMetaData & LoadableApp<T> & {
   activeWhen: RegisterApplicationConfig['activeWhen'];
   loader?: (loading: boolean) => void;
-  props?: T;
 };
 
 type StartMetaOptions  = {
