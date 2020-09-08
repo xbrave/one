@@ -1,7 +1,7 @@
 import { registerApplication, start as startApplication } from 'single-spa';
-import { Deferred } from './utils';
+import { Deferred, toArray } from './utils';
 import { getMicroApp } from './loader';
-import { RegisterableApplication, Config } from './interface';
+import { RegisterableApplication, Config, LifeCycles } from './interface';
 
 function noop(): void {}
 
@@ -9,7 +9,7 @@ let microApps: RegisterableApplication[] = [];
 let config: Config = {};
 const startDefer = new Deferred<void>();
 
-export function register<T extends object = {}>(apps: RegisterableApplication<T>[]) {
+export function register<T extends object = {}>(apps: RegisterableApplication<T>[], lifeCycles: LifeCycles<T>) {
   const unregisterApps = apps.filter(app => !microApps.some(registerApp => registerApp.name === app.name));
   microApps = [...microApps, ...unregisterApps];
   unregisterApps.forEach(app => {
@@ -19,9 +19,10 @@ export function register<T extends object = {}>(apps: RegisterableApplication<T>
       app: async () => {
         loader(true);
         await startDefer.promise;
-        const {} = await getMicroApp({ name, props, ...remainingConfig }, config);
+        const { mount, ...otherConfig } = await getMicroApp({ name, props, ...remainingConfig }, lifeCycles);
         return {
-          mount: [async () => loader(true), async () => loader(false)],
+          mount: [async () => loader(true), ...toArray(mount), async () => loader(false)],
+          ...otherConfig
         };
       },
       activeWhen,

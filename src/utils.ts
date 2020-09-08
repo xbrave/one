@@ -19,3 +19,7 @@ export function clone(target: Target): Target {
   }
   return ret;
 }
+
+export function toArray(target: any) {
+  return Array.isArray(target) ? target : [target];
+}
