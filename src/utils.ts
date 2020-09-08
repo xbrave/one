@@ -9,3 +9,13 @@ export class Deferred<T> {
     });
   }
 }
+
+type Target = Record<string, any>;
+
+export function clone(target: Target): Target {
+  const ret: Target = Array.isArray(target) ? [] : {};
+  for (let i in target) {
+    ret[i] = typeof target[i] === 'object' ? clone(target[i]) : target[i];
+  }
+  return ret;
+}
