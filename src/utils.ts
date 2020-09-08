@@ -20,6 +20,17 @@ export function clone(target: Target): Target {
   return ret;
 }
 
+function isFunction(fn: any) {
+  return typeof fn === 'function';
+}
+
+export function validateExportLifecycle(exports: any) {
+  const { bootstrap, mount, unmount } = exports ?? {};
+  return isFunction(bootstrap) && isFunction(mount) && isFunction(unmount);
+}
+
 export function toArray(target: any) {
   return Array.isArray(target) ? target : [target];
 }
+
+export function noop(): void {}
