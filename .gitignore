@@ -6,13 +6,10 @@ coverage/
 run
 dist
 .DS_Store
-.nyc_output
-config.local.js
 .idea/
 .cache
 yarn.lock
 es
-lib
 package-lock.json
 .eslintcache
 .history

@@ -2,7 +2,7 @@ import { importEntry } from 'import-html-entry';
 import { getMicroAppStateActions } from './global';
 import { toArray } from './utils';
 import { ParcelConfigObject } from 'single-spa';
-import { LoadableApp, Config, LifeCycles, LifeCycleFn } from './interface';
+import { LoadableApp, LifeCycles, LifeCycleFn } from './interface';
 
 const getTemplateWrapper = (id: string, name: string, template: string) => {
   return `<div id=${id} data-name=${name}>${template}</div>`;
@@ -32,12 +32,13 @@ export async function getMicroApp<T extends object>(
   let global = window;
   const { entry, name } = app;
   const appId = `${name}-${+new Date()}-${Math.random().toString(36).slice(-6)}`;
-  const { template, execScripts, assetPublicPath } = await importEntry(entry);
+  const { template, execScripts } = await importEntry(entry);
   const appContent = getTemplateWrapper(appId, name, template);
   let element: HTMLElement | null = createElement(appContent);
   const { beforeMount, afterMount, beforeUnmount, afterUnmount } = lifeCycles;
   const { bootstrap, mount, unmount, update } = await execScripts(global);
   const { onGlobalStateChange, offGlobalStateChange, setGlobalState } = getMicroAppStateActions(appId);
+  console.log(element);
   const parcelConfig: ParcelConfigObject = {
     name: appId,
     bootstrap,
