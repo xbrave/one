@@ -32,7 +32,8 @@
   "homepage": "https://github.com/xbrave/one#readme",
   "dependencies": {
     "import-html-entry": "^1.9.1",
-    "single-spa": "^5.5.5"
+    "single-spa": "^5.5.5",
+    "systemjs": "^6.5.1"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^5.0.2",

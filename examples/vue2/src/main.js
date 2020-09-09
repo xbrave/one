@@ -29,10 +29,6 @@ function render(props = {}) {
   }).$mount(container ? container.querySelector('#app') : '#app');
 }
 
-if (!window.__POWERED_BY_QIANKUN__) {
-  render();
-}
-
 function storeTest(props) {
   props.onGlobalStateChange &&
     props.onGlobalStateChange(

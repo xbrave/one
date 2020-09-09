@@ -1,6 +1,6 @@
 import { importEntry } from 'import-html-entry';
 import { getMicroAppStateActions } from './global';
-import { toArray, noop, validateExportLifecycle } from './utils';
+import { toArray, noop, validateExportLifecycle, Deferred } from './utils';
 import { ParcelConfigObject } from 'single-spa';
 import { LoadableApp, LifeCycles, LifeCycleFn } from './interface';
 
@@ -39,6 +39,8 @@ function getLifecyclesFromExports(scriptExports: LifeCycles<any>, appName: strin
   throw new Error(`You need to export lifecycle functions in ${appName} entry`);
 }
 
+let deferred: Deferred<void>;
+
 export async function getMicroApp<T extends object>(
   app: LoadableApp<T>,
   lifeCycles: LifeCycles<T>
@@ -47,19 +49,29 @@ export async function getMicroApp<T extends object>(
   const { entry, name } = app;
   const appId = `${name}_${+new Date()}_${Math.random().toString(36).slice(-6)}`;
   const { template, execScripts } = await importEntry(entry);
+  await deferred && deferred.promise;
   const appContent = getTemplateWrapper(appId, name, template);
   let element: HTMLElement | null = createElement(appContent);
   const { beforeMount = noop, afterMount = noop, beforeUnmount = noop, afterUnmount = noop } = lifeCycles;
-  const exports: any = await execScripts(global, true);
+  const exports: any = await execScripts();
   const { bootstrap, mount, unmount, update } = getLifecyclesFromExports(exports, name, global);
   const { onGlobalStateChange, offGlobalStateChange, setGlobalState } = getMicroAppStateActions(appId);
   const parcelConfig: ParcelConfigObject = {
     name: appId,
     bootstrap,
     mount: [
+      async () => {
+        if (deferred) {
+          return deferred.promise;
+        }
+        return undefined;
+      },
       async () => execHooksChain(toArray(beforeMount), app, global),
       async props => mount({ ...props, container: element, setGlobalState, onGlobalStateChange }),
       async () => execHooksChain(toArray(afterMount), app, global),
+      async () => {
+        deferred = new Deferred<void>();
+      }
     ],
     unmount: [
       async () => execHooksChain(toArray(beforeUnmount), app, global),
@@ -69,6 +81,9 @@ export async function getMicroApp<T extends object>(
         offGlobalStateChange();
         element = null;
       },
+      async () => {
+        deferred.resolve();
+      }
     ],
   };
   if (typeof update === 'function') {

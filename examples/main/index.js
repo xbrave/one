@@ -1,27 +1,20 @@
 import { register, start } from '../../es';
-import load from './load';
 import './index.less';
-
-load(true);
-
-const loader = bool => load(bool);
 
 const container = '#app'
 
 register(
   [
    {
-    name: 'react',
+    name: 'react16',
     entry: 'http://localhost:2334',
     container,
-    loader,
-    activeWhen: '/react'
+    activeWhen: '/react16'
    },
    {
     name: 'vue',
     entry: 'http://localhost:2335',
     container,
-    loader,
     activeWhen: '/vue'
    },
   ],
