@@ -13,7 +13,7 @@ const About = lazy(() => import('./pages/About'));
 
 const RouteExample = () => {
   return (
-    <Router basename={true ? '/react16' : '/'}>
+    <Router basename={window.__ONE__ ? '/react16' : '/'}>
       <nav>
         <Link to="/">Home</Link>
         <Divider type="vertical" />
@@ -35,9 +35,9 @@ export default function App() {
       <LibVersion />
       <HelloModal />
 
-      <Divider />
+      {/* <Divider /> */}
 
-      <RouteExample />
+      {/* <RouteExample /> */}
     </div>
   );
 }

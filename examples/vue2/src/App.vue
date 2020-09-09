@@ -1,13 +1,36 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link>
-      |
-      <router-link to="/about">About</router-link>
+      <el-button @click="dialogVisible = true" type="text">Open Dialog</el-button>
+      <el-dialog :before-close="handleClose" :visible.sync="dialogVisible" title="Dialog" width="30%">
+        <span>dialog message</span>
+        <span class="dialog-footer" slot="footer">
+          <el-button @click="dialogVisible = false">cancel</el-button>
+          <el-button @click="dialogVisible = false" type="primary">ok</el-button>
+        </span>
+      </el-dialog>
     </div>
-    <router-view/>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      dialogVisible: false,
+    };
+  },
+  methods: {
+    handleClose(done) {
+      this.$confirm('Sure to close？')
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
+    },
+  },
+};
+</script>
 
 <style>
 #app {

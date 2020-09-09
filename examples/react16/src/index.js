@@ -17,6 +17,10 @@ function storeTest(props) {
   });
 }
 
+if (!window.__ONE__) {
+  render();
+}
+
 export async function bootstrap() {
   console.log('[react16] react app bootstraped');
 }
