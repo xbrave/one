@@ -1,9 +1,9 @@
-import './public-path';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
 function render(props) {
+  console.log(props);
   ReactDOM.render(<App />, document.querySelector('#app'));
 }
 
@@ -17,7 +17,7 @@ function storeTest(props) {
   });
 }
 
-if (!window.__ONE__) {
+if (!window.ONE) {
   render();
 }
 

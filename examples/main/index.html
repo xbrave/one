@@ -12,10 +12,9 @@
         <div onclick="push('/vue')">Vue</div>
       </div>
     </div>
-    <div id="app">
-    </div>
+    <div id="app"></div>
     <script>
-      window.__ONE__ = true;
+      window.ONE = true;
       function push(route) {
         window.history.pushState(null, route, route);
       }

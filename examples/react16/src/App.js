@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, {  Suspense } from 'react';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import { Divider } from 'antd';
 
@@ -9,11 +9,11 @@ import LibVersion from './components/LibVersion';
 import HelloModal from './components/HelloModal';
 
 import Home from './pages/Home';
-const About = lazy(() => import('./pages/About'));
+import About from './pages/About';
 
 const RouteExample = () => {
   return (
-    <Router basename={window.__ONE__ ? '/react16' : '/'}>
+    <Router basename={window.ONE ? '/react16' : '/'}>
       <nav>
         <Link to="/">Home</Link>
         <Divider type="vertical" />
@@ -35,9 +35,9 @@ export default function App() {
       <LibVersion />
       <HelloModal />
 
-      {/* <Divider /> */}
+      <Divider />
 
-      {/* <RouteExample /> */}
+      <RouteExample />
     </div>
   );
 }

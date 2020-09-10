@@ -66,6 +66,9 @@ export async function getMicroApp<T extends object>(
         }
         return undefined;
       },
+      // async () => {
+      //   global.PUBLIC_PATH = assetPublicPath ? assetPublicPath: '/';
+      // },
       async () => execHooksChain(toArray(beforeMount), app, global),
       async props => mount({ ...props, container: element, setGlobalState, onGlobalStateChange }),
       async () => execHooksChain(toArray(afterMount), app, global),
@@ -74,6 +77,9 @@ export async function getMicroApp<T extends object>(
       }
     ],
     unmount: [
+      // async () => {
+      //   global.PUBLIC_PATH = assetPublicPath ? assetPublicPath: '/'
+      // },
       async () => execHooksChain(toArray(beforeUnmount), app, global),
       async props => unmount({ ...props, container: element }),
       async () => execHooksChain(toArray(afterUnmount), app, global),

@@ -1,4 +1,4 @@
-import './public-path';
+// import './public-path';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import Vue from 'vue';
@@ -17,7 +17,7 @@ let instance = null;
 function render(props = {}) {
   const { container } = props;
   router = new VueRouter({
-    base: window.__ONE__ ? '/vue' : '/',
+    base: window.ONE ? '/vue' : '/',
     mode: 'history',
     routes,
   });
@@ -26,10 +26,10 @@ function render(props = {}) {
     router,
     store,
     render: h => h(App),
-  }).$mount(container ? container.querySelector('#app') : '#app');
+  }).$mount('#app');
 }
 
-if (!window.__ONE__) {
+if (!window.ONE) {
   render();
 }
 
@@ -37,7 +37,7 @@ function storeTest(props) {
   props.onGlobalStateChange &&
     props.onGlobalStateChange(
       (value, prev) => console.log(`[onGlobalStateChange - ${props.name}]:`, value, prev),
-      true,
+      true
     );
   props.setGlobalState &&
     props.setGlobalState({

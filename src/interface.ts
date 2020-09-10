@@ -1,5 +1,11 @@
 import { RegisterApplicationConfig, StartOpts } from 'single-spa';
 
+declare global {
+  interface Window {
+    PUBLIC_PATH?: string
+  }
+}
+
 export type Entry = string;
 
 export type AppMetaData = {
